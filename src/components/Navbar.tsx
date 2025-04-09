@@ -15,7 +15,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center gap-2">
               <FlameKindling className="h-8 w-8 text-primary animate-pulse-light" />
-              <span className="font-bold text-xl text-gradient">CodeSpark</span>
+              <span className="font-bold text-xl text-gradient">JSR Coders</span>
             </Link>
           </div>
           
