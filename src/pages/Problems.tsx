@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Problem } from '../types/problem';
 import ProblemCard from '../components/ProblemCard';
@@ -50,7 +49,7 @@ const mockProblems: Problem[] = [
     description: 'Given a string s containing just the characters \'(\', \')\', \'{\', \'}\', \'[\' and \']\', determine if the input string is valid.',
     difficulty: 'easy',
     category: ['strings', 'stack'],
-    constraints: ['1 <= s.length <= 10^4', 's consists of parentheses only \'()[]{}'.'],
+    constraints: ['1 <= s.length <= 10^4', 's consists of parentheses only \'()[]{}\''],
     examples: [
       {
         input: 's = "()"',
