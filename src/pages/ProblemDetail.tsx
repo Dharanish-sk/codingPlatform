@@ -13,6 +13,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useToast } from '@/hooks/use-toast';
 import { ArrowLeft, ArrowRight, BookOpen, Lightbulb, ThumbsUp, Timer, TrendingUp } from 'lucide-react';
+import axios from 'axios';
 
 // Mock problem data for demo
 const mockProblem: Problem = {
@@ -79,6 +80,11 @@ const ProblemDetail = () => {
   const [showHint, setShowHint] = useState(false);
   const { toast } = useToast();
 
+
+ 
+  
+
+  
   useEffect(() => {
     // In a real app, we would fetch the problem from the backend
     setLoading(true);
@@ -100,66 +106,54 @@ const ProblemDetail = () => {
   const handleCodeChange = (newCode: string) => {
     setCode(newCode);
   };
-
+ 
   const handleRun = async () => {
-    setExecutionStatus('running');
     setOutput('');
-    setExecutionTime(undefined);
-    
-    try {
-      // Simulate code execution
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
-      // Mock execution result
-      const startTime = performance.now();
-      
-      // In a real implementation, we'd evaluate the code against test cases
-      if (code.includes('return') || code.includes('print') || code.includes('console.log')) {
-        const executionDuration = Math.floor(Math.random() * 100) + 20;
-        setExecutionTime(executionDuration);
-        setOutput('Input: s = "abcabcbb"\nOutput: 3\nExpected: 3\n\nInput: s = "bbbbb"\nOutput: 1\nExpected: 1\n\nInput: s = "pwwkew"\nOutput: 3\nExpected: 3\n\nAll test cases passed!');
-        setExecutionStatus('success');
-      } else {
-        setExecutionStatus('error');
-        setOutput('Error: Your solution doesn\'t return a value or has a syntax error.');
-      }
-      
-    } catch (err: any) {
-      setExecutionStatus('error');
-      setOutput(err.toString());
-    }
+  setIsProcessing(true);
+
+  try {
+    const res = await axios.post('http://localhost:5000/api/run-code', {
+      script: code,
+      language, // like 'python', 'javascript'
+      versionIndex: '', // not needed for RapidAPI
+      stdin: '', // optional
+    });
+
+    setOutput(res.data.stdout || res.data.stderr || res.data.message);
+  } catch (err) {
+    console.error(err);
+    setOutput('Error running code');
+  } finally {
+     setIsProcessing(false);
+  }
   };
+  
+
 
   const handleSubmit = async () => {
-    setIsProcessing(true);
-    
-    try {
-      // Simulate submission
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // Mock evaluation result
-      if (code.includes('return') || code.includes('print') || code.includes('console.log')) {
-        toast({
-          title: "Success!",
-          description: "Your solution has been accepted. All test cases passed!",
-        });
-      } else {
-        toast({
-          title: "Error",
-          description: "Your solution failed. Please check your code and try again.",
-          variant: "destructive",
-        });
-      }
-    } catch (err) {
-      toast({
-        title: "Error",
-        description: "Something went wrong. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsProcessing(false);
-    }
+   const runCode = async () => {
+  setOutput('');
+  setIsProcessing(true);
+
+  try {
+    const res = await axios.post('http://localhost:5000/api/run-code', {
+      script: code,
+      language, // like 'python', 'javascript'
+      versionIndex: '', // not needed for RapidAPI
+      stdin: '', // optional
+    });
+
+    setOutput(res.data.stdout || res.data.stderr || res.data.message);
+  } catch (err) {
+    console.error(err);
+    setOutput('Error running code');
+  } finally {
+    setIsProcessing(false);
+  }
+};
+
   };
+  
 
   const handleToggleHint = () => {
     setShowHint(!showHint);

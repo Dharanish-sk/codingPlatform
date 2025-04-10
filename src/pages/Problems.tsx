@@ -5,8 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Search } from 'lucide-react';
 
-// Mock data for problems
-const mockProblems: Problem[] = [
+ const mockProblems: Problem[] = [
   {
     id: '1',
     title: 'Two Sum',

@@ -82,7 +82,7 @@ const Home = () => {
       <section className="mt-24 lg:mt-32 px-6">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-3xl font-bold mb-4">Why CodeSpark?</h2>
+            <h2 className="text-3xl font-bold mb-4">Why JSR Coders?</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
               Our platform offers unique features to enhance your coding journey
             </p>
