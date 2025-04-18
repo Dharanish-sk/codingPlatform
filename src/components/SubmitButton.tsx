@@ -5,14 +5,12 @@ import { PlayCircle, Send } from 'lucide-react';
 
 interface SubmitButtonProps {
   onRun: () => void;
-  onSubmit: () => void;
-  isLoading?: boolean;
+   isLoading?: boolean;
 }
 
 const SubmitButton: React.FC<SubmitButtonProps> = ({ 
   onRun, 
-  onSubmit, 
-  isLoading = false 
+   isLoading = false 
 }) => {
   return (
     <div className="flex gap-2">
@@ -20,13 +18,24 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
         variant="outline"
         onClick={onRun}
         disabled={isLoading}
-        className="flex items-center gap-2 border-muted hover:border-primary/50"
+        className={`bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity ${
+          isLoading ? 'animate-pulse' : ''
+        }`}
       >
-        <PlayCircle className="h-4 w-4" />
-        <span>Run</span>
+        {isLoading ? (
+          <div className="flex items-center gap-2">
+            <div className="h-4 w-4 border-2 border-t-transparent rounded-full animate-spin" />
+            <span>Processing...</span>
+          </div>
+        ) : (
+          <div className="flex items-center gap-2">
+            <Send className="h-4 w-4" />
+            <span>Run</span>
+          </div>
+        )}
       </Button>
       
-      <Button 
+      {/* <Button 
         onClick={onSubmit}
         disabled={isLoading}
         className={`bg-gradient-to-r from-primary to-secondary hover:opacity-90 transition-opacity ${
@@ -44,7 +53,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
             <span>Submit</span>
           </div>
         )}
-      </Button>
+      </Button> */}
     </div>
   );
 };
